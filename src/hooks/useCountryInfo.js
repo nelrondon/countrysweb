@@ -30,7 +30,7 @@ export const useCountryInfo = (name) => {
         };
         setHistory((prev) => {
           const lastOne = prev[0];
-          if (lastOne.name === log.name) return prev;
+          if (lastOne && lastOne.name === log.name) return prev;
           const prevSet = prev.filter((c) => log.name !== c.name);
           return [log, ...prevSet];
         });
