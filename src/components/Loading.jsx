@@ -14,7 +14,7 @@ export const Loading = () => {
     } else {
       timer = setTimeout(() => {
         ref.current.classList.add("hidden");
-      }, 1000);
+      }, 500);
     }
     return () => clearTimeout(timer);
   }, [isLoading]);
