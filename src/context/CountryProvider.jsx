@@ -7,6 +7,9 @@ import { Loading } from "../components/Loading";
 export const CountryProvider = ({ children }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [countries, setCountries] = useState([]);
+  const [history, setHistory] = useState(() => {
+    return JSON.parse(localStorage.getItem("history")) || [];
+  });
 
   useEffect(() => {
     const fetchCountries = async () => {
@@ -22,6 +25,10 @@ export const CountryProvider = ({ children }) => {
     fetchCountries();
   }, []);
 
+  useEffect(() => {
+    localStorage.setItem("history", JSON.stringify(history));
+  }, [history]);
+
   return (
     <CountryContext.Provider
       value={{
@@ -29,6 +36,8 @@ export const CountryProvider = ({ children }) => {
         setIsLoading,
         countries,
         setCountries,
+        history,
+        setHistory,
       }}
     >
       <Loading />

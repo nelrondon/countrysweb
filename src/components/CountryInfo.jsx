@@ -1,7 +1,15 @@
 import { BorderCountry } from "./BorderCountry";
 import { useCountryInfo } from "../hooks/useCountryInfo";
 import { useParams } from "react-router-dom";
-import { ArrowLeft, Globe, Home, Persons } from "./Icons";
+import {
+  ArrowLeft,
+  Globe,
+  GlobeAmericas,
+  GlobeAsia,
+  GlobeEurope,
+  Home,
+  Persons,
+} from "./Icons";
 
 const Widget = ({ icon, caption, value }) => {
   return (
@@ -19,6 +27,17 @@ export const CountryInfo = () => {
   const { name } = useParams();
   const { country, countries, handleBack, formatPopulation } =
     useCountryInfo(name);
+
+  const getContinentIcon = () => {
+    const continents = country.region;
+    if (continents.includes("Europe") || continents.includes("Africa")) {
+      return <GlobeEurope />;
+    }
+    if (continents.includes("Asia") || continents.includes("Australia")) {
+      return <GlobeAsia />;
+    }
+    return <GlobeAmericas />;
+  };
 
   if (Object.keys(country).length > 0) {
     return (
@@ -51,7 +70,11 @@ export const CountryInfo = () => {
         <section>
           <div className="content">
             <Widget icon={<Home />} caption="Capital" value={country.capital} />
-            <Widget icon={<Globe />} caption="Región" value={country.region} />
+            <Widget
+              icon={getContinentIcon()}
+              caption="Región"
+              value={country.region}
+            />
             <Widget
               icon={<Globe />}
               caption="Continente"

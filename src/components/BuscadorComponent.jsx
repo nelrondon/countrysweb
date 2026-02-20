@@ -1,5 +1,5 @@
 import { useCountry } from "../context/CountryContext.jsx";
-import Buscador from "./BuscadorCountry";
+import Buscador from "./BuscadorCountry.jsx";
 import { Globe } from "./Icons.jsx";
 
 export const BuscadorComponent = () => {

@@ -45,11 +45,17 @@ function BuscarCountry() {
       className={`search-form ${error ? "error" : ""}`}
       onClick={handleFocus}
       onSubmit={handleSearch}
+      onChange={(e) => {
+        if (e.target.value.length === 0) setError(false);
+      }}
     >
       <input
         ref={inputRef}
         type="text"
         placeholder="Ingrese un pais para empezar la busqueda."
+        onChange={(e) => {
+          if (e.target.value.length === 0) setError(false);
+        }}
       />
       <button>
         <Search />
