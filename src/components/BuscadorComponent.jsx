@@ -9,10 +9,12 @@ export const BuscadorComponent = () => {
     <section className="search-container">
       <header>
         <h1 className="title row">
-          <Globe />
           Buscador de Paises
+          <Globe />
         </h1>
-        <p>Contamos con +{countries.length} países a buscar.</p>
+        <p>
+          Datos disponibles de <b>{`+${countries.length} paises.`}</b>
+        </p>
       </header>
       <Buscador />
     </section>

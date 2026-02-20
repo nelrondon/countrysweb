@@ -22,10 +22,6 @@ export const CountryProvider = ({ children }) => {
     fetchCountries();
   }, []);
 
-  useEffect(() => {
-    console.log(isLoading);
-  }, [isLoading]);
-
   return (
     <CountryContext.Provider
       value={{

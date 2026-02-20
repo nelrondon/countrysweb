@@ -23,7 +23,7 @@ export const useCountryInfo = (name) => {
         const paisData = data.find((c) => {
           return normalize(c.translations.spa.common) === normalize(name);
         });
-
+        console.log(paisData);
         setCountry(paisData);
       } finally {
         setIsLoading(false);

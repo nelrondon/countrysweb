@@ -12,6 +12,7 @@
   color: rgba(255, 255, 255, 0.87);
 
   --color: #1f7496;
+  --error-color: #ce1919;
   --color-300: oklch(from var(--color) 0.25 c h);
   --bg-color: oklch(from var(--color) 0.1 c h);
   background-color: var(--bg-color);
@@ -40,17 +41,23 @@ html {
   height: 1.2em;
 }
 
+body {
+  font-size: clamp(0.9rem, 1.8vw, 1.2rem);
+}
+
 #root {
   width: 100vw;
   min-height: 100dvh;
-  padding: 1em;
+  padding: 2em;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  background-image: radial-gradient(circle,
-      rgba(255, 255, 255, 0.2) 1px,
-      transparent 1px);
+  background-image: radial-gradient(
+    circle,
+    rgba(255, 255, 255, 0.2) 1px,
+    transparent 1px
+  );
   background-size: 25px 25px;
   background-position: 0 0;
 }
@@ -61,6 +68,17 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: start;
+
+  header {
+    padding: 0 0.5em;
+
+    h1 {
+      font-size: 2.5em;
+      line-height: 0.9;
+      gap: 0.5em;
+      justify-content: space-between;
+    }
+  }
 }
 
 .search-form {
@@ -73,6 +91,32 @@ html {
   justify-content: space-between;
   margin-top: 0.8em;
   gap: 0.5em;
+  position: relative;
+  transition: all 0.3s ease;
+  border: 2px solid transparent;
+
+  &.error {
+    border-color: var(--error-color);
+  }
+
+  p.error {
+    color: var(--error-color);
+    font-size: 1em;
+    margin-top: 0.5em;
+    text-align: center;
+    text-transform: uppercase;
+    font-weight: 500;
+    position: absolute;
+    left: 50%;
+    top: 100%;
+    transform: translateX(-50%);
+    transition: all 0.3s ease;
+    z-index: -1;
+
+    &.hidden {
+      transform: translateX(-50%) translateY(-150%);
+    }
+  }
 
   input {
     flex: 1;
@@ -83,6 +127,7 @@ html {
     font-weight: 500;
     letter-spacing: -0.03em;
     font-size: 1.1em;
+    z-index: 2;
 
     &::placeholder {
       color: oklch(from var(--color) 0.9 c h / 0.5);
@@ -96,8 +141,8 @@ html {
     outline: none;
     border: none;
     cursor: pointer;
-    padding: 0.5em;
-    font-size: 1em;
+    padding: 0.4em;
+    font-size: 1.2em;
 
     .icon {
       stroke-width: 2;
@@ -122,12 +167,40 @@ html {
 
   header {
     display: flex;
+    align-items: center;
     gap: 1em;
+    position: relative;
+    flex-wrap: wrap;
 
-    img {
-      height: 100px;
-      max-width: 40%;
-      border-radius: 0.5em;
+    .imgs {
+      flex: 1;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: nowrap;
+      gap: 1em;
+
+      img {
+        height: 100px;
+        border-radius: 0.5em;
+        object-fit: contain;
+      }
+    }
+
+    .info {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5em;
+
+      h1 {
+        font-size: 3em;
+        line-height: 0.9;
+      }
+
+      p {
+        line-height: 1;
+      }
     }
   }
 
@@ -143,7 +216,7 @@ html {
     .content {
       display: flex;
       align-items: start;
-      gap: 0.2em;
+      gap: 0.5em;
       flex-wrap: wrap;
 
       .column {
@@ -154,11 +227,19 @@ html {
         justify-content: center;
         gap: 0.2em;
 
+        .icon {
+          flex-shrink: 0;
+        }
+
         p {
+          width: 100%;
           background: var(--color-300);
           border-radius: 9999px;
           padding: 0.5em 1em;
-          line-height: 1;
+          line-height: 0.9;
+          font-weight: 500;
+          text-align: center;
+          justify-content: center;
         }
       }
     }
@@ -197,11 +278,13 @@ html {
     border-radius: 9999px;
     padding: 0.5em 1em;
     flex: 1;
-    text-wrap: nowrap;
-    overflow: hidden;
-    white-space: nowrap;
     font-size: 0.9em;
     text-align: center;
+    p {
+      text-wrap: nowrap;
+      overflow: hidden;
+      white-space: nowrap;
+    }
   }
 }
 

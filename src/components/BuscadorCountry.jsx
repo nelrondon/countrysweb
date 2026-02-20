@@ -3,16 +3,18 @@ import { Search } from "./Icons";
 import { useRef } from "react";
 import { useCountry } from "../context/CountryContext";
 import { normalize } from "../utils/libs.js";
+import { useState } from "react";
 
 function BuscarCountry() {
   const inputRef = useRef(null);
+  const [error, setError] = useState(false);
   const { countries, setIsLoading } = useCountry();
   const navigate = useNavigate();
 
   const handleSearch = (e) => {
     e.preventDefault();
     const entry = inputRef.current.value;
-
+    if (!entry) return;
     const pais = countries.find((country) => {
       const nameSpa = country.translations.spa.common;
       const nameEng = country.name.common;
@@ -26,20 +28,22 @@ function BuscarCountry() {
     });
 
     if (!pais) {
-      console.log("No se encontro el pais");
-      return;
+      return setError(true);
     }
     setIsLoading(true);
     const nameCountry = pais.translations.spa.common;
     navigate(`/country/${normalize(nameCountry)}`);
   };
 
+  const handleFocus = () => {
+    setError(false);
+    inputRef.current.focus();
+  };
+
   return (
     <form
-      className="search-form"
-      onClick={() => {
-        inputRef.current.focus();
-      }}
+      className={`search-form ${error ? "error" : ""}`}
+      onClick={handleFocus}
       onSubmit={handleSearch}
     >
       <input
@@ -50,6 +54,7 @@ function BuscarCountry() {
       <button>
         <Search />
       </button>
+      <p className={`error ${error ? "" : "hidden"}`}>Pais no encontrado</p>
     </form>
   );
 }
